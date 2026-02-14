@@ -130,9 +130,10 @@ a:hover { color: var(--accent); }
 }
 
 .hero-logo-inline {
-  width: clamp(26px, 3.2vw, 38px);
-  height: clamp(26px, 3.2vw, 38px);
+  width: clamp(52px, 7vw, 86px);
+  height: clamp(52px, 7vw, 86px);
   object-fit: contain;
+  flex-shrink: 0;
 }
 
 .hero-lead {

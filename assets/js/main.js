@@ -1,33 +1,42 @@
 (() => {
-  const postsDataElement = document.getElementById("posts-data");
-  if (!postsDataElement) {
-    return;
-  }
-
-  let rawPosts = [];
-  try {
-    rawPosts = JSON.parse(postsDataElement.textContent || "[]");
-  } catch (_error) {
-    return;
-  }
-
   const normalizeWord = (value) => String(value || "").trim().normalize("NFC");
 
-  const posts = rawPosts
-    .map((post) => {
-      const words = Array.isArray(post.words)
-        ? [...new Set(post.words.map(normalizeWord).filter(Boolean))]
-        : [];
+  const parseInlinePostsFallback = () => {
+    const postsDataElement = document.getElementById("posts-data");
+    if (!postsDataElement) {
+      return [];
+    }
+    try {
+      const parsed = JSON.parse(postsDataElement.textContent || "[]");
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (_error) {
+      return [];
+    }
+  };
 
-      return {
-        title: String(post.title || "").trim(),
-        url: String(post.url || "").trim(),
-        date: String(post.date || "").trim(),
-        timestamp: Number(post.timestamp || 0),
-        words,
-      };
-    })
-    .sort((a, b) => b.timestamp - a.timestamp);
+  const resolvePostsUrl = () => {
+    if (typeof window.IMWRITERI_POSTS_URL === "string" && window.IMWRITERI_POSTS_URL.trim()) {
+      return window.IMWRITERI_POSTS_URL.trim();
+    }
+    return "/assets/posts.json";
+  };
+
+  const loadRawPosts = async () => {
+    const url = resolvePostsUrl();
+    try {
+      const response = await fetch(url, { cache: "no-store" });
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+      const parsed = await response.json();
+      if (!Array.isArray(parsed)) {
+        throw new Error("posts.json is not an array");
+      }
+      return parsed;
+    } catch (_error) {
+      return parseInlinePostsFallback();
+    }
+  };
 
   const renderPostList = (container, items) => {
     container.innerHTML = "";
@@ -61,10 +70,14 @@
     });
   };
 
-  const searchInput = document.getElementById("word-search-input");
-  const searchResults = document.getElementById("word-search-results");
-  const searchEmpty = document.getElementById("word-search-empty");
-  if (searchInput && searchResults && searchEmpty) {
+  const attachSearch = (posts) => {
+    const searchInput = document.getElementById("word-search-input");
+    const searchResults = document.getElementById("word-search-results");
+    const searchEmpty = document.getElementById("word-search-empty");
+    if (!searchInput || !searchResults || !searchEmpty) {
+      return;
+    }
+
     const params = new URLSearchParams(window.location.search);
 
     const applySearch = () => {
@@ -92,16 +105,19 @@
       searchInput.value = initialWord;
       applySearch();
     }
-  }
+  };
 
-  const chipGrid = document.getElementById("word-chip-grid");
-  const selectedWordLabel = document.getElementById("selected-word-label");
-  const wordResults = document.getElementById("word-results");
-  const wordResultsEmpty = document.getElementById("word-results-empty");
+  const attachWordChips = (posts) => {
+    const chipGrid = document.getElementById("word-chip-grid");
+    const selectedWordLabel = document.getElementById("selected-word-label");
+    const wordResults = document.getElementById("word-results");
+    const wordResultsEmpty = document.getElementById("word-results-empty");
 
-  if (chipGrid && selectedWordLabel && wordResults && wordResultsEmpty) {
+    if (!chipGrid || !selectedWordLabel || !wordResults || !wordResultsEmpty) {
+      return;
+    }
+
     const frequency = new Map();
-
     posts.forEach((post) => {
       post.words.forEach((word) => {
         frequency.set(word, (frequency.get(word) || 0) + 1);
@@ -177,5 +193,33 @@
 
     const initialWord = normalizeWord(new URLSearchParams(window.location.search).get("w"));
     setWordFilter(initialWord);
-  }
+  };
+
+  const normalizePosts = (rawPosts) =>
+    rawPosts
+      .map((post) => {
+        const words = Array.isArray(post.words)
+          ? [...new Set(post.words.map(normalizeWord).filter(Boolean))]
+          : [];
+
+        return {
+          title: String(post.title || "").trim(),
+          url: String(post.url || "").trim(),
+          date: String(post.date || "").trim(),
+          timestamp: Number(post.timestamp || 0),
+          words,
+        };
+      })
+      .sort((a, b) => b.timestamp - a.timestamp);
+
+  (async () => {
+    const rawPosts = await loadRawPosts();
+    const posts = normalizePosts(rawPosts);
+    if (posts.length === 0) {
+      return;
+    }
+
+    attachSearch(posts);
+    attachWordChips(posts);
+  })();
 })();

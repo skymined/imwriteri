@@ -13,6 +13,9 @@
       {{ content }}
     </main>
     {% include footer.html %}
-    <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+    <script>
+      window.IMWRITERI_POSTS_URL = {{ '/assets/posts.json' | relative_url | jsonify }};
+    </script>
+    <script src="{{ '/assets/js/main.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
   </body>
 </html>

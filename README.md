@@ -1,4 +1,4 @@
-﻿# IMWRITERI GitHub Pages Blog
+# IMWRITERI GitHub Pages Blog
 
 모노톤 기반의 Jekyll 블로그입니다. 랜딩(타이핑 모션)과 최신 글 목록을 한 페이지에서 제공합니다.
 

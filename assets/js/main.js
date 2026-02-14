@@ -1,1 +1,1 @@
-﻿// Intentionally minimal: reserved for tiny progressive enhancements.
+// Intentionally minimal: reserved for tiny progressive enhancements.

@@ -5,6 +5,7 @@ permalink: /about/
 ---
 <section class="container page">
   <h1>About</h1>
-  <p>IMWRITERI는 매일 5단어를 씨앗으로 글을 씁니다.</p>
-  <p>간결한 리듬과 선명한 감각을 중심으로, 수필과 짧은 이야기를 기록합니다.</p>
+  <p>IMWRITERI는 매일 제시되는 특정 단어를 씨앗으로, 정해진 분위기와 tags를 바탕으로 글을 씁니다.</p>
+  <p>간결한 리듬과 선명한 감각을 중심으로 수필, 짧은 이야기, 시적 문장을 기록합니다.</p>
+  <p>관련 문의사항이나 제안(suggestion)은 트위터 <a href="https://x.com/imawriteri">@imawriteri</a>로 연락해주세요.</p>
 </section>

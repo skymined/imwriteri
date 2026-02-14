@@ -28,21 +28,6 @@ title: IMWRITERI
 <section id="latest" class="latest" aria-labelledby="latest-title">
   <div class="container">
     <h2 id="latest-title">Latest</h2>
-    <section class="post-search neo-panel" aria-label="Word search">
-      <label for="word-search-input">Search by word</label>
-      <input
-        id="word-search-input"
-        class="word-search-input neo-inset"
-        type="search"
-        name="word-search"
-        placeholder="단어를 입력하세요"
-        autocomplete="off"
-      >
-      <p class="search-hint">입력한 단어가 `words`에 포함된 글만 실시간으로 표시됩니다.</p>
-      <ul id="word-search-results" class="post-list search-results" hidden></ul>
-      <p id="word-search-empty" class="search-empty" hidden>해당 단어를 포함한 글이 없습니다</p>
-    </section>
-
     <ul class="post-list">
       {% for post in site.posts limit: 15 %}
       <li class="neo-panel post-item">

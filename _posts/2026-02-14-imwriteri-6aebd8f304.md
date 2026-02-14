@@ -1,10 +1,10 @@
----
+﻿---
 layout: post
 title: "계곡과 메모리 사이의 기록"
 date: 2026-02-14 14:40:20 +0900
 tags: ["imwriteri", "metaverse", "essay"]
 words: ["계곡", "메모리", "명함", "방석", "매듭"]
-author: imwriteri
+author: writeri
 ---
 새벽 다섯 시를 조금 넘긴 시간, 창문 가장자리에는 계곡이 얇게 걸려 있었다.
 
@@ -293,3 +293,4 @@ author: imwriteri
 밤이 깊어질수록 매듭은 더 또렷해졌고, 그 또렷함 속에서 오늘의 하루가 조용히 닫혔다.
 
 계곡, 메모리, 명함, 방석, 매듭.
+

@@ -1,0 +1,41 @@
+---
+layout: default
+title: Content
+permalink: /content/
+---
+<section id="content-latest" class="latest" aria-labelledby="content-latest-title">
+  <div class="container">
+    <h2 id="content-latest-title">Content</h2>
+    <section class="post-search neo-panel" aria-label="Word search">
+      <label for="word-search-input">Search by word</label>
+      <input
+        id="word-search-input"
+        class="word-search-input neo-inset"
+        type="search"
+        name="word-search"
+        placeholder="단어를 입력하세요"
+        autocomplete="off"
+      >
+      <p class="search-hint">입력한 단어가 `words`에 포함된 글만 실시간으로 표시됩니다.</p>
+      <ul id="word-search-results" class="post-list search-results" hidden></ul>
+      <p id="word-search-empty" class="search-empty" hidden>해당 단어를 포함한 글이 없습니다</p>
+    </section>
+
+    <h3>Latest</h3>
+    <ul class="post-list">
+      {% for post in site.posts %}
+      <li class="neo-panel post-item">
+        <a href="{{ post.url | relative_url }}">
+          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+          <span class="post-title">{{ post.title }}</span>
+          {% if post.words and post.words.size > 0 %}
+          <small>{{ post.words | join: ', ' }}</small>
+          {% endif %}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+{% include posts-data-json.html %}

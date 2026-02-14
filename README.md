@@ -29,6 +29,9 @@ bundle exec jekyll serve
 4. `_posts`에 새 글 추가 후 목록 갱신 확인
 
 ## What words? / 검색 기능
+- 상단 내비게이션에 `Content` 페이지가 추가되어 있습니다.
+- `Home`은 `Latest` 목록만 표시합니다.
+- `Content` 페이지에서 `Search by word` + 최신순 글 목록을 제공합니다.
 - 상단 내비게이션에 `What words?` 페이지가 추가되어 있습니다.
 - `words` 페이지는 모든 포스트의 front matter `words`를 모아 단어 칩으로 표시합니다.
 - 단어 칩 정렬 기준: **빈도 높은 순 우선, 동률은 가나다순**.

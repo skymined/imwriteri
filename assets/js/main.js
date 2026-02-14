@@ -114,6 +114,50 @@
     }
   };
 
+  const normalizeLegacyPostTagBlock = () => {
+    const legacy = document.querySelector(".post-tag-toggle");
+    if (!legacy) {
+      return;
+    }
+
+    const summary = legacy.querySelector("summary");
+    const allParagraphs = [...legacy.querySelectorAll("p")];
+    const tagsParagraph = allParagraphs.find((node) =>
+      String(node.textContent || "").toLowerCase().includes("tags:"),
+    );
+
+    let tags = [];
+    if (tagsParagraph) {
+      const raw = String(tagsParagraph.textContent || "");
+      const cleaned = raw.replace(/^.*tags:\s*/i, "");
+      tags = cleaned
+        .split(",")
+        .map((part) => normalizeWord(part))
+        .filter(Boolean);
+    }
+
+    const next = document.createElement("details");
+    next.className = "post-thoughts-block";
+
+    const nextSummary = document.createElement("summary");
+    nextSummary.textContent = summary
+      ? summary.textContent
+      : "writeri의 머릿속이 궁금한 분들에게...";
+    next.appendChild(nextSummary);
+
+    const chipGrid = document.createElement("div");
+    chipGrid.className = "post-tag-chip-grid";
+    tags.forEach((tag) => {
+      const chip = document.createElement("span");
+      chip.className = "post-tag-chip";
+      chip.textContent = tag;
+      chipGrid.appendChild(chip);
+    });
+    next.appendChild(chipGrid);
+
+    legacy.replaceWith(next);
+  };
+
   const attachContentLatest = (posts) => {
     const contentLatestList = document.getElementById("content-latest-list");
     if (!contentLatestList) {
@@ -235,11 +279,13 @@
     const rawPosts = await loadRawPosts();
     const posts = normalizePosts(rawPosts);
     if (posts.length === 0) {
+      normalizeLegacyPostTagBlock();
       return;
     }
 
     attachContentLatest(posts);
     attachSearch(posts);
     attachWordChips(posts);
+    normalizeLegacyPostTagBlock();
   })();
 })();

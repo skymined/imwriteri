@@ -316,6 +316,25 @@ a:hover { color: var(--accent); }
   margin-top: 1.8rem;
 }
 
+.post-tag-toggle {
+  margin-top: 1.35rem;
+  padding: .85rem 1rem;
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-2);
+  background: #e2e8ee;
+}
+
+.post-tag-toggle summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.post-tag-toggle p {
+  margin: .55rem 0 0;
+  color: var(--text);
+}
+
 .site-footer {
   padding: 2rem 0;
   color: var(--muted);

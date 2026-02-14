@@ -9,3 +9,10 @@ permalink: /:year/:month/:day/:title/
 # - User/Organization Page: leave empty ("")
 # - Project Page (repo page): set to "/imwriteri" if needed
 baseurl: "/imwriteri"
+
+# UI toggles
+# - false (default): keep tags hidden in public pages
+# - true: show tags site-wide (post header + list snippets)
+show_tags: false
+# - true: also show sort_tags(category->tag) on post pages
+show_sort_tags: false

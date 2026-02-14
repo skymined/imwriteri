@@ -1,5 +1,6 @@
 (() => {
   const normalizeWord = (value) => String(value || "").trim().normalize("NFC");
+  const shouldShowTags = Boolean(window.IMWRITERI_SHOW_TAGS);
 
   const parseInlinePostsFallback = () => {
     const postsDataElement = document.getElementById("posts-data");
@@ -58,6 +59,12 @@
 
       link.appendChild(time);
       link.appendChild(title);
+
+      if (shouldShowTags && post.tags.length > 0) {
+        const smallTags = document.createElement("small");
+        smallTags.textContent = `tags: ${post.tags.join(", ")}`;
+        link.appendChild(smallTags);
+      }
 
       if (post.words.length > 0) {
         const small = document.createElement("small");
@@ -201,12 +208,16 @@
         const words = Array.isArray(post.words)
           ? [...new Set(post.words.map(normalizeWord).filter(Boolean))]
           : [];
+        const tags = Array.isArray(post.tags)
+          ? [...new Set(post.tags.map(normalizeWord).filter(Boolean))]
+          : [];
 
         return {
           title: String(post.title || "").trim(),
           url: String(post.url || "").trim(),
           date: String(post.date || "").trim(),
           timestamp: Number(post.timestamp || 0),
+          tags,
           words,
         };
       })

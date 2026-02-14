@@ -7,6 +7,8 @@
     "url": {{ post.url | relative_url | jsonify }},
     "date": {{ post.date | date: "%Y-%m-%d" | jsonify }},
     "timestamp": {{ post.date | date: "%s" | jsonify }},
+    "tags": {% if post.tags %}{{ post.tags | jsonify }}{% else %}[]{% endif %},
+    "sort_tags": {% if post.sort_tags %}{{ post.sort_tags | jsonify }}{% else %}{}{% endif %},
     "words": {% if post.words %}{{ post.words | jsonify }}{% else %}[]{% endif %}
   }{% unless forloop.last %},{% endunless %}
   {% endfor %}

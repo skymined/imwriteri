@@ -1,0 +1,27 @@
+---
+layout: default
+title: What words?
+permalink: /words/
+---
+<section class="words-page" aria-labelledby="words-title">
+  <div class="container">
+    <article class="page words-shell">
+      <header class="words-header">
+        <h1 id="words-title">What words?</h1>
+        <p>모든 포스트의 `words`를 모아 단어 인덱스를 제공합니다.</p>
+      </header>
+
+      <div id="word-chip-grid" class="word-chip-grid" aria-label="Word index"></div>
+
+      <div class="word-result-head">
+        <p id="selected-word-label" class="selected-word">단어를 선택하면 결과가 표시됩니다</p>
+      </div>
+
+      <ul id="word-results" class="post-list word-results"></ul>
+      <p id="word-results-empty" class="search-empty">단어를 선택하면 해당 글 목록이 나타납니다</p>
+    </article>
+  </div>
+</section>
+
+{% include posts-data-json.html %}
+

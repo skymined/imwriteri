@@ -27,3 +27,18 @@ bundle exec jekyll serve
    - 타이핑 모션 동작(모바일 포함)
    - 스크롤 시 최신 글 목록이 최신순 노출
 4. `_posts`에 새 글 추가 후 목록 갱신 확인
+
+## What words? / 검색 기능
+- 상단 내비게이션에 `What words?` 페이지가 추가되어 있습니다.
+- `words` 페이지는 모든 포스트의 front matter `words`를 모아 단어 칩으로 표시합니다.
+- 단어 칩 정렬 기준: **빈도 높은 순 우선, 동률은 가나다순**.
+- 단어 칩 클릭 시 URL에 `?w=<단어>`가 반영되며, 해당 단어를 포함한 글 목록이 최신순으로 표시됩니다.
+- 홈(`index`) 상단 검색 입력창에서 단어를 입력하면 실시간으로 관련 글 목록이 표시됩니다.
+- 결과가 없으면 `해당 단어를 포함한 글이 없습니다` 메시지를 보여줍니다.
+
+## 구현 구조
+- `words.html`: 단어 인덱스/필터 UI
+- `index.html`: 홈 검색 UI
+- `_includes/posts-data-json.html`: `site.posts`를 JS용 JSON으로 노출
+- `assets/js/main.js`: 단어 필터/검색 로직
+- `assets/css/style.css`: 검색/칩 스타일

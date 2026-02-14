@@ -1,6 +1,14 @@
 <header class="site-header">
   <div class="container header-inner">
-    <a class="logo" href="{{ '/' | relative_url }}">IMWRITERI</a>
+    <a class="logo" href="{{ '/' | relative_url }}">
+      <img
+        class="logo-mark"
+        src="{{ '/assets/images/writeri_logo.png' | relative_url }}"
+        alt=""
+        aria-hidden="true"
+      >
+      <span class="logo-text">IMWRITERI</span>
+    </a>
     <nav class="site-nav" aria-label="Primary">
       <a href="{{ '/' | relative_url }}">Home</a>
       <a href="{{ '/content/' | relative_url }}">Content</a>

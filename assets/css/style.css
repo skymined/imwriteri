@@ -67,8 +67,22 @@ a:hover { color: var(--accent); }
 }
 
 .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: .52rem;
   font-weight: 800;
   letter-spacing: .14em;
+}
+
+.logo-mark {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  display: inline-block;
 }
 
 .site-nav {
@@ -107,9 +121,18 @@ a:hover { color: var(--accent); }
 }
 
 .hero h1 {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
   margin: .65rem 0 0;
   font-size: clamp(1.85rem, 5.1vw, 3.25rem);
   line-height: 1.15;
+}
+
+.hero-logo-inline {
+  width: clamp(26px, 3.2vw, 38px);
+  height: clamp(26px, 3.2vw, 38px);
+  object-fit: contain;
 }
 
 .hero-lead {
@@ -320,13 +343,13 @@ a:hover { color: var(--accent); }
   margin-top: 1.75rem;
   padding: .9rem 1rem;
   border-radius: var(--r-md);
-  background: #d8dee6;
+  background: #eef2f6;
   box-shadow: var(--shadow-2);
 }
 
 .post-thoughts-block summary {
   cursor: pointer;
-  color: #505b67;
+  color: #6d7783;
   font-weight: 700;
   list-style: none;
 }
@@ -355,10 +378,22 @@ a:hover { color: var(--accent); }
   display: inline-block;
   padding: .35rem .7rem;
   border-radius: 999px;
-  background: #e9edf2;
+  background: #f5f7fa;
   color: #3f4a56;
   font-size: .84rem;
   box-shadow: inset 0 0 0 1px #c7d0da;
+}
+
+.back-home-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .38rem;
+  padding: .42rem .75rem;
+  border-radius: 999px;
+  color: #2f3a46;
+  background: #eef2f6;
+  box-shadow: var(--shadow-1);
+  font-weight: 600;
 }
 
 .site-footer {

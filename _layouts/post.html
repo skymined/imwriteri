@@ -16,21 +16,14 @@ layout: default
     {{ content }}
   </div>
 
-  {% if page.tags and page.tags.size > 0 or page.sort_tags %}
-  <details class="post-tag-toggle">
+  {% if page.tags and page.tags.size > 0 %}
+  <details class="post-thoughts-block">
     <summary>writeri의 머릿속이 궁금한 분들에게...</summary>
-    {% if page.tags and page.tags.size > 0 %}
-    <p><strong>tags</strong>: {{ page.tags | join: ', ' }}</p>
-    {% endif %}
-    {% if page.sort_tags %}
-    <p>
-      <strong>sort tags</strong>:
-      {% assign sort_entries = page.sort_tags | sort %}
-      {% for entry in sort_entries %}
-        {{ entry[0] }}={{ entry[1] }}{% unless forloop.last %}, {% endunless %}
+    <div class="post-tag-chip-grid">
+      {% for tag in page.tags %}
+      <span class="post-tag-chip">{{ tag }}</span>
       {% endfor %}
-    </p>
-    {% endif %}
+    </div>
   </details>
   {% endif %}
 

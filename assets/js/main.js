@@ -114,6 +114,14 @@
     }
   };
 
+  const attachContentLatest = (posts) => {
+    const contentLatestList = document.getElementById("content-latest-list");
+    if (!contentLatestList) {
+      return;
+    }
+    renderPostList(contentLatestList, posts);
+  };
+
   const attachWordChips = (posts) => {
     const chipGrid = document.getElementById("word-chip-grid");
     const selectedWordLabel = document.getElementById("selected-word-label");
@@ -230,6 +238,7 @@
       return;
     }
 
+    attachContentLatest(posts);
     attachSearch(posts);
     attachWordChips(posts);
   })();

@@ -316,23 +316,49 @@ a:hover { color: var(--accent); }
   margin-top: 1.8rem;
 }
 
-.post-tag-toggle {
-  margin-top: 1.35rem;
-  padding: .85rem 1rem;
+.post-thoughts-block {
+  margin-top: 1.75rem;
+  padding: .9rem 1rem;
   border-radius: var(--r-md);
+  background: #d8dee6;
   box-shadow: var(--shadow-2);
-  background: #e2e8ee;
 }
 
-.post-tag-toggle summary {
+.post-thoughts-block summary {
   cursor: pointer;
-  color: var(--muted);
-  font-weight: 600;
+  color: #505b67;
+  font-weight: 700;
+  list-style: none;
 }
 
-.post-tag-toggle p {
-  margin: .55rem 0 0;
-  color: var(--text);
+.post-thoughts-block summary::-webkit-details-marker {
+  display: none;
+}
+
+.post-thoughts-block summary::after {
+  content: " +";
+  color: #6d7884;
+}
+
+.post-thoughts-block[open] summary::after {
+  content: " -";
+}
+
+.post-tag-chip-grid {
+  margin-top: .8rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+.post-tag-chip {
+  display: inline-block;
+  padding: .35rem .7rem;
+  border-radius: 999px;
+  background: #e9edf2;
+  color: #3f4a56;
+  font-size: .84rem;
+  box-shadow: inset 0 0 0 1px #c7d0da;
 }
 
 .site-footer {

@@ -13,8 +13,9 @@
       {{ content }}
     </main>
     {% include footer.html %}
+    {% assign posts_json_ver = site.time | date: '%s' %}
     <script>
-      window.IMWRITERI_POSTS_URL = {{ '/assets/posts.json' | relative_url | jsonify }};
+      window.IMWRITERI_POSTS_URL = {{ '/assets/posts.json?v=' | append: posts_json_ver | relative_url | jsonify }};
       window.IMWRITERI_SHOW_TAGS = {{ site.show_tags | default: false | jsonify }};
       window.IMWRITERI_SHOW_SORT_TAGS = {{ site.show_sort_tags | default: false | jsonify }};
     </script>

@@ -22,15 +22,12 @@ permalink: /content/
     </section>
 
     <h3>Latest</h3>
-    <ul class="post-list">
-      {% for post in site.posts %}
+    <ul id="content-latest-list" class="post-list">
+      {% for post in site.posts limit: 50 %}
       <li class="neo-panel post-item">
         <a href="{{ post.url | relative_url }}">
           <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
           <span class="post-title">{{ post.title }}</span>
-          {% if site.show_tags and post.tags and post.tags.size > 0 %}
-          <small>tags: {{ post.tags | join: ', ' }}</small>
-          {% endif %}
           {% if post.words and post.words.size > 0 %}
           <small>{{ post.words | join: ', ' }}</small>
           {% endif %}

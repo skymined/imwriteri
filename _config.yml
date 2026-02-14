@@ -8,4 +8,4 @@ permalink: /:year/:month/:day/:title/
 # baseurl guide:
 # - User/Organization Page: leave empty ("")
 # - Project Page (repo page): set to "/imwriteri" if needed
-baseurl: ""
+baseurl: "/imwriteri"

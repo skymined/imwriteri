@@ -316,6 +316,62 @@ a:hover { color: var(--accent); }
   margin-top: 1.8rem;
 }
 
+.post-like {
+  margin-top: 1.25rem;
+  padding: .95rem 1rem;
+}
+
+.post-like-lead {
+  margin: 0;
+  color: var(--muted);
+  font-size: .93rem;
+}
+
+.post-like-row {
+  margin-top: .65rem;
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+}
+
+.post-like-button {
+  border: 0;
+  cursor: pointer;
+  border-radius: 999px;
+  padding: .44rem .95rem;
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+  color: var(--text);
+  font: inherit;
+}
+
+.post-like-button:disabled {
+  opacity: .78;
+  cursor: default;
+}
+
+.post-like-button:focus-visible {
+  outline: 2px solid #7f8a97;
+  outline-offset: 2px;
+}
+
+.post-like-count-text {
+  margin: 0;
+  color: var(--muted);
+  font-size: .94rem;
+}
+
+.post-like-count {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.post-like-help {
+  margin: .5rem 0 0;
+  color: var(--muted);
+  font-size: .86rem;
+}
+
 .site-footer {
   padding: 2rem 0;
   color: var(--muted);

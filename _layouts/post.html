@@ -28,5 +28,19 @@ layout: default
     {{ content }}
   </div>
 
+  {% if site.likes.enabled %}
+    {% assign like_key = page.url | replace: '/', '_' | replace: '.', '_' | replace: ':', '_' %}
+    <section class="post-like neo-inset" data-like-widget data-like-key="{{ like_key | strip }}">
+      <p class="post-like-lead">이 글이 좋았다면 좋아요를 눌러주세요.</p>
+      <div class="post-like-row">
+        <button type="button" class="post-like-button" data-like-button>좋아요</button>
+        <p class="post-like-count-text" aria-live="polite">
+          <span class="post-like-count" data-like-count>0</span> likes
+        </p>
+      </div>
+      <p class="post-like-help" data-like-status hidden></p>
+    </section>
+  {% endif %}
+
   <p class="back-home"><a href="{{ '/' | relative_url }}">Back to Home</a></p>
 </article>

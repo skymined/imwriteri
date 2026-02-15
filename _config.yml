@@ -16,3 +16,16 @@ baseurl: "/imwriteri"
 show_tags: false
 # - true: also show sort_tags(category->tag) on post pages
 show_sort_tags: false
+
+# Analytics
+# - Set your GA4 measurement id (example: G-XXXXXXXXXX) to enable visitor tracking.
+analytics:
+  ga4_measurement_id: "G-458XKN8YNZ"
+
+# Likes
+# - enabled: shows like button on each post page.
+# - namespace: optional global namespace for count storage.
+#   Leave empty to auto-split by hostname (useful for branch/preview testing).
+likes:
+  enabled: true
+  namespace: "imwriteri-staging"

@@ -1,6 +1,9 @@
 (() => {
   const normalizeWord = (value) => String(value || "").trim().normalize("NFC");
   const shouldShowTags = Boolean(window.IMWRITERI_SHOW_TAGS);
+  const likesEnabled = Boolean(window.IMWRITERI_LIKES_ENABLED);
+  const configuredLikesNamespace = String(window.IMWRITERI_LIKES_NAMESPACE || "").trim();
+  const likesApiBase = "https://api.counterapi.dev/v1";
 
   const parseInlinePostsFallback = () => {
     const postsDataElement = document.getElementById("posts-data");
@@ -202,6 +205,136 @@
     setWordFilter(initialWord);
   };
 
+  const sanitizeNamespacePart = (value) =>
+    String(value || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9-]/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/(^-|-$)/g, "");
+
+  const resolveLikesNamespace = () => {
+    if (configuredLikesNamespace) {
+      return configuredLikesNamespace;
+    }
+
+    const hostPart = sanitizeNamespacePart(window.location.hostname || "local");
+    return `imwriteri-likes-${hostPart || "local"}`;
+  };
+
+  const resolveStorageKey = (namespace, key) => `imwriteri:likes:v1:${namespace}:${key}`;
+
+  const parseLikeValue = (payload) => {
+    if (!payload || typeof payload.count !== "number" || Number.isNaN(payload.count)) {
+      return 0;
+    }
+    return payload.count;
+  };
+
+  const getLikeCount = async (namespace, key) => {
+    const url = `${likesApiBase}/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}`;
+    const response = await fetch(url, { cache: "no-store" });
+    if (!response.ok) {
+      if (response.status === 400 || response.status === 404) {
+        return 0;
+      }
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const payload = await response.json();
+    return parseLikeValue(payload);
+  };
+
+  const hitLikeCount = async (namespace, key) => {
+    const url = `${likesApiBase}/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}/up`;
+    const response = await fetch(url, { method: "GET", cache: "no-store" });
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const payload = await response.json();
+    return parseLikeValue(payload);
+  };
+
+  const attachLikeWidgets = async () => {
+    if (!likesEnabled) {
+      return;
+    }
+
+    const widgets = document.querySelectorAll("[data-like-widget]");
+    if (widgets.length === 0) {
+      return;
+    }
+
+    const namespace = resolveLikesNamespace();
+
+    widgets.forEach((widget) => {
+      const key = String(widget.getAttribute("data-like-key") || "").trim();
+      const button = widget.querySelector("[data-like-button]");
+      const countLabel = widget.querySelector("[data-like-count]");
+      const statusLabel = widget.querySelector("[data-like-status]");
+
+      if (!key || !button || !countLabel || !statusLabel) {
+        return;
+      }
+
+      const storageKey = resolveStorageKey(namespace, key);
+      let liked = window.localStorage.getItem(storageKey) === "1";
+      let busy = false;
+
+      const setBusy = (value) => {
+        busy = value;
+        button.disabled = value || liked;
+      };
+
+      const setStatus = (message) => {
+        statusLabel.hidden = !message;
+        statusLabel.textContent = message;
+      };
+
+      const setCount = (value) => {
+        countLabel.textContent = String(Math.max(0, Number(value) || 0));
+      };
+
+      if (liked) {
+        button.disabled = true;
+        button.textContent = "좋아요 완료";
+      }
+
+      setStatus("");
+
+      getLikeCount(namespace, key)
+        .then((value) => {
+          setCount(value);
+        })
+        .catch(() => {
+          setStatus("좋아요 수를 불러오지 못했습니다.");
+        });
+
+      button.addEventListener("click", async () => {
+        if (busy || liked) {
+          return;
+        }
+
+        setBusy(true);
+        setStatus("저장 중...");
+
+        try {
+          const value = await hitLikeCount(namespace, key);
+          setCount(value);
+          window.localStorage.setItem(storageKey, "1");
+          liked = true;
+          button.textContent = "좋아요 완료";
+          button.disabled = true;
+          setStatus("좋아요가 반영되었습니다.");
+        } catch (_error) {
+          setStatus("저장에 실패했습니다. 잠시 후 다시 시도해주세요.");
+        } finally {
+          setBusy(false);
+        }
+      });
+    });
+  };
+
   const normalizePosts = (rawPosts) =>
     rawPosts
       .map((post) => {
@@ -224,6 +357,8 @@
       .sort((a, b) => b.timestamp - a.timestamp);
 
   (async () => {
+    await attachLikeWidgets();
+
     const rawPosts = await loadRawPosts();
     const posts = normalizePosts(rawPosts);
     if (posts.length === 0) {

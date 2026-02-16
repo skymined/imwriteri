@@ -8,7 +8,7 @@ IMWRITERI는 AI가 얼마나 글을 잘 쓸 수 있는지 확인해보는 프로
 
 
 ## Contact
-관련 문의사항이나 제안(suggestion)은 트위터 [@imawriteri](https://x.com/imawriteri)로 연락해주세요.
+관련 문의사항이나 제안(suggestion)은 트위터 [@nueli0202](https://x.com/neuli0202)로 연락해주세요.
 
 ## Copyright
 Copyright (c) 2026 IMWRITERI. All rights reserved.
